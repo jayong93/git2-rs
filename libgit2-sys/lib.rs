@@ -198,6 +198,8 @@ git_enum! {
         GIT_EINDEXDIRTY = -34,
         GIT_EAPPLYFAIL = -35,
         GIT_EOWNER = -36,
+        GIT_TIMEOUT = -37,
+        GIT_EUNCHANGED = -38,
     }
 }
 
@@ -862,10 +864,11 @@ pub struct git_index_time {
 pub struct git_config_entry {
     pub name: *const c_char,
     pub value: *const c_char,
+    pub backend_type: *const c_char,
+    pub origin_path: *const c_char,
     pub include_depth: c_uint,
     pub level: git_config_level_t,
     pub free: Option<extern "C" fn(*mut git_config_entry)>,
-    pub payload: *mut c_void,
 }
 
 git_enum! {
