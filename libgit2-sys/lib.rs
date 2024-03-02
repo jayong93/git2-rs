@@ -366,6 +366,13 @@ pub struct git_indexer_options {
 
 pub type git_remote_ready_cb = Option<extern "C" fn(*mut git_remote, c_int, *mut c_void) -> c_int>;
 
+git_enum! {
+    pub enum git_remote_update_flags {
+        GIT_REMOTE_UPDATE_FETCHHEAD = 1 << 0,
+        GIT_REMOTE_UPDATE_REPORT_UNCHANGED = 1 << 1,
+    }
+}
+
 #[repr(C)]
 pub struct git_remote_callbacks {
     pub version: c_uint,
@@ -391,7 +398,7 @@ pub struct git_fetch_options {
     pub version: c_int,
     pub callbacks: git_remote_callbacks,
     pub prune: git_fetch_prune_t,
-    pub update_fetchhead: c_int,
+    pub update_flags: c_uint,
     pub download_tags: git_remote_autotag_option_t,
     pub proxy_opts: git_proxy_options,
     pub depth: c_int,
@@ -2327,7 +2334,7 @@ extern "C" {
     pub fn git_remote_update_tips(
         remote: *mut git_remote,
         callbacks: *const git_remote_callbacks,
-        update_fetchead: c_int,
+        update_flags: c_uint,
         download_tags: git_remote_autotag_option_t,
         reflog_message: *const c_char,
     ) -> c_int;
