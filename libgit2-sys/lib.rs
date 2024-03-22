@@ -200,6 +200,8 @@ git_enum! {
         GIT_EOWNER = -36,
         GIT_TIMEOUT = -37,
         GIT_EUNCHANGED = -38,
+        GIT_ENOTSUPPORTED = -39,
+        GIT_EREADONLY = -40,
     }
 }
 
@@ -878,7 +880,8 @@ git_enum! {
         GIT_CONFIG_LEVEL_XDG = 3,
         GIT_CONFIG_LEVEL_GLOBAL = 4,
         GIT_CONFIG_LEVEL_LOCAL = 5,
-        GIT_CONFIG_LEVEL_APP = 6,
+        GIT_CONFIG_LEVEL_WORKTREE = 6,
+        GIT_CONFIG_LEVEL_APP = 7,
         GIT_CONFIG_HIGHEST_LEVEL = -1,
     }
 }
@@ -1974,6 +1977,7 @@ git_enum! {
 pub struct git_worktree_add_options {
     pub version: c_uint,
     pub lock: c_int,
+    pub checkout_existing: c_int,
     pub reference: *mut git_reference,
     pub checkout_options: git_checkout_options,
 }
